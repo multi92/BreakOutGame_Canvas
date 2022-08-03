@@ -23,19 +23,38 @@ const keyz = { ArrowLeft: false, ArrowRight: false };
 canvas.setAttribute("width", game.grid * 15);
 canvas.setAttribute("height", game.grid * 10);
 canvas.style.border = "1px solid black";
-//kada budemo pritisnuli dugme keydown
+/*KEYDOWN MOVEMENT*/
 document.addEventListener("keydown", (e) => {
   if (e.code in keyz) {
     keyz[e.code] = true;
   }
 });
-//kada budemo pritisnuli dugme keyup
+/*KEYDOWN MOVEMENT KRAJ*/
+document.addEventListener("mousemove", (e) => {
+  //umesto document.addEventListener mozemo staviti i canvas.addEvenetListener ali cemo onda moci da uzmemo pozicije u canvas board-u
+  //ono sto cemo uraditi u addEvent jeste da uzmemo pozicije clientX i clientY
+  console.log(e);
+
+  const val = e.clientX - canvas.offsetLeft; //moramo uzeti vrednost u canvasu offsetLeft sto vraca broj piksela u levom uglu(delu)
+
+  //ako je pomeranje misa u canvas delu
+  if (player.width > 0 && val < canvas.width) {
+    player.x = val - player.width;
+    console.log(player.x);
+  }
+});
+/*KEYUP MOVEMENT*/
 document.addEventListener("keyup", (e) => {
   if (e.code in keyz) {
     keyz[e.code] = false;
     // console.log(keyz);
   }
 });
+/*KEYUP MOVEMENT KRAJ*/
+
+/*MOUSE MOVEMENT*/
+
+/*MOUSE MOVEMENT KRAJ*/
 
 game.ani = requestAnimationFrame(draw);
 
@@ -48,6 +67,7 @@ function movement() {
     player.x += player.speed;
   }
 }
+/*MOVEMENT FUNCKIJA KRAJ*/
 /*PALEYR CRTANJE*/
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -60,4 +80,4 @@ function draw() {
   //js animacije(prolazi kroz draw funckiju)
   game.ani = requestAnimationFrame(draw);
 }
-
+/*PALEYR CRTANJE KRAJ*/
