@@ -6,9 +6,9 @@ const game = { grid: 60, ani: "" };
 const ball = {
   x: game.grid * 7,
   y: game.grid * 5,
-  w: 10,
-  h: 10,
-  color: "blue",
+  w: game.grid / 3,
+  h: game.grid / 3,
+  color: "green",
   dx: 5,
   dy: 5,
 };
@@ -105,9 +105,17 @@ function drawPlayer() {
 /*FUNCKIJA DRAWBALL*/
 function drawBall() {
   ctx.beginPath();
+  ctx.strokeStyle = 'white';
   ctx.rect(ball.x, ball.y, ball.w, ball.h);
+  ctx.stroke(); // prazan kvadrat
+  ctx.closePath();
+
+  //napraviti krug umesto kvadrata
+  ctx.beginPath();
   ctx.fillStyle = ball.color;
-  ctx.fill();
+  let adj = ball.w / 2;
+  ctx.arc(ball.x + adj, ball.y + adj, ball.w / 2, 0, Math.PI * 2);
+  ctx.fill(); 
   ctx.closePath();
 }
 /*FUNCKIJA DRAWBALL KRAJ*/
